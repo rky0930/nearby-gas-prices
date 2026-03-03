@@ -28,6 +28,21 @@
 
 ## 설치 (CLI)
 
+### 옵션 A) (추천) 바이너리 CLI 설치 (Releases + install.sh)
+
+릴리즈된 바이너리를 설치하면 Python 없이도 실행할 수 있습니다.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/rky0930/nearby-gas-prices/main/install.sh | sh
+
+# 설치 확인
+nearby-gas-prices --help
+```
+
+- Windows는 Releases에서 `nearby-gas-prices_windows_amd64.zip`을 내려받아 `nearby-gas-prices.exe`를 PATH에 두는 방식을 권장합니다.
+
+### 옵션 B) Python 스크립트 실행
+
 OpenClaw가 없어도, Python만 있으면 실행 가능합니다.
 
 ### 1) 레포 받기
