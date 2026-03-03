@@ -21,6 +21,8 @@ type AroundAllParams struct {
 }
 
 type Station struct {
+	ID        string  `json:"id"`
+	Brand     string  `json:"brand"`
 	Name      string  `json:"name"`
 	Price     int     `json:"price"`
 	DistanceM float64 `json:"distance_m"`
@@ -48,6 +50,8 @@ func (s *stringOrNumber) UnmarshalJSON(b []byte) error {
 type aroundAllResp struct {
 	Result struct {
 		Oil []struct {
+			ID    string         `json:"UNI_ID"`
+			Brand string         `json:"POLL_DIV_CD"`
 			OSNM  string         `json:"OS_NM"`
 			Price stringOrNumber `json:"PRICE"`
 			Dist  stringOrNumber `json:"DISTANCE"`
@@ -99,7 +103,7 @@ func AroundAll(ctx context.Context, hc *http.Client, p AroundAllParams) ([]Stati
 		dist, _ := strconv.ParseFloat(string(it.Dist), 64)
 		x, _ := strconv.ParseFloat(string(it.X), 64)
 		y, _ := strconv.ParseFloat(string(it.Y), 64)
-		out = append(out, Station{Name: it.OSNM, Price: price, DistanceM: dist, X: x, Y: y})
+		out = append(out, Station{ID: it.ID, Brand: it.Brand, Name: it.OSNM, Price: price, DistanceM: dist, X: x, Y: y})
 	}
 
 	return out, nil
