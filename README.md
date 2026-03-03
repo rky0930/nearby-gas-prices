@@ -80,7 +80,19 @@ chmod 600 ~/.config/nearby-gas-prices/config.toml
 
 ## 사용 예시
 
-### 1) 위경도로 조회 (예: 소사역 근처)
+### 1) 지명으로 조회 (`--query`)
+
+```bash
+# 예: 부천 역곡역 근처
+nearby-gas-prices --query "부천 역곡역" --top 3
+
+# "근처" 같은 표현도 동작할 수 있지만, 지오코딩 결과가 애매할 수 있어
+# 보통은 "역곡역", "부천 역곡역"처럼 지명/역 이름을 권장합니다.
+```
+
+> 참고: `--query`는 OSM Nominatim을 사용하므로 `NOMINATIM_USER_AGENT`(또는 설정 파일의 `nominatim_user_agent`)가 필요합니다.
+
+### 2) 위경도로 조회 (예: 소사역 근처)
 
 ```bash
 nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
@@ -108,7 +120,7 @@ nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
    지도(네이버): https://map.naver.com/v5/search/%E3%88%9C%EC%82%BC%ED%91%9C%EC%97%90%EB%84%88%EC%A7%80+%EC%82%BC%ED%91%9C%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.778113,37.494629,15,0,0,0,dh
 ```
 
-### 2) JSON 출력
+### 3) JSON 출력
 
 ```bash
 nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 2 --json
