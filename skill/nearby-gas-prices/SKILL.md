@@ -65,10 +65,18 @@ CLI는 기본적으로 사람이 읽기 좋은 텍스트를 출력하고, `--jso
 
 ## OPINET_KEY 발급 방법(요약)
 
+`OPINET_KEY`가 없으면 오피넷 API를 호출할 수 없어서 스킬/CLI가 동작하지 않습니다.
+
 - 오피넷 접속: https://www.opinet.co.kr/
-- 오피넷 API 안내: https://www.opinet.co.kr/user/custapi/custApiInfo.do
-- 로그인 후 **무료 API 이용신청** → **인증키/KEY 확인**
-- 키는 코드/레포에 하드코딩하지 말고 환경변수로만 보관
+- 페이지 이동: *이용안내 → 오피넷 API(유가정보 API)*
+  - 안내 링크: https://www.opinet.co.kr/user/custapi/custApiInfo.do
+- 로그인/회원가입 후 **무료 API 이용신청** → **인증키/KEY 확인**
+- 발급받은 키를 다음 중 하나로 설정
+  - 환경변수: `OPINET_KEY`
+  - 설정 파일: `~/.config/nearby-gas-prices/config.toml` 의 `opinet_key`
+
+보안 주의:
+- 키를 코드/레포/이슈/로그에 남기지 마세요.
 
 ## 참고 자료
 
