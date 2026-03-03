@@ -17,6 +17,32 @@ import (
 )
 
 func main() {
+	flag.Usage = func() {
+		out := flag.CommandLine.Output()
+		fmt.Fprintln(out, "nearby-gas-prices - 주변 주유소 가격/최저가 조회 (Opinet + Nominatim)")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "USAGE")
+		fmt.Fprintln(out, "  nearby-gas-prices --query \"소사역\" [options]")
+		fmt.Fprintln(out, "  nearby-gas-prices --lat 37.48278 --lon 126.79565 [options]")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "ENV")
+		fmt.Fprintln(out, "  OPINET_KEY                (필수) 오피넷 무료 API KEY. 요청 파라미터 code 로 전달됨")
+		fmt.Fprintln(out, "  NOMINATIM_USER_AGENT      (조건부) --query 사용 시 필요. OSM Nominatim 정책상 contact 포함 권장(미설정 시 403 가능)")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "NOTES")
+		fmt.Fprintln(out, "  - Opinet aroundAll.do 제한: radius <= 5000m")
+		fmt.Fprintln(out, "  - Opinet aroundAll.do 좌표: x,y 는 KATEC (WGS84 위경도 아님)")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "EXAMPLES")
+		fmt.Fprintln(out, "  export OPINET_KEY=\"<YOUR_KEY>\"")
+		fmt.Fprintln(out, "  export NOMINATIM_USER_AGENT=\"nearby-gas-prices/0.1 (contact: you@example.com)\"")
+		fmt.Fprintln(out, "  nearby-gas-prices --query \"소사역\" --top 5")
+		fmt.Fprintln(out, "  nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 5 --json")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "OPTIONS")
+		flag.PrintDefaults()
+	}
+
 	var (
 		query   = flag.String("query", "", "장소명(예: 소사역)")
 		lat     = flag.Float64("lat", 0, "위도 (WGS84)")
