@@ -117,9 +117,22 @@ CLI는 기본적으로 사람이 읽기 좋은 텍스트를 출력하고, `--jso
 
 > aroundAll 응답은 KATEC만 주므로, 서비스에서 지도 링크를 안정적으로 만들려면 KATEC→WGS84 역변환(또는 별도 지오코딩)을 추가 구현한다.
 
+## API Key가 없을 때 (중요)
+
+이 스킬/CLI는 기본적으로 오피넷 *Open API*를 호출합니다. 따라서 `OPINET_KEY`가 없으면 *API 호출은 할 수 없습니다*.
+
+- 이 경우에는 오류만 내고 끝내기보다,
+  - 사용자에게 “API Key 없이도 수동으로 확인할 수 있는 오피넷 페이지”를 안내하고
+  - (OpenClaw 환경이라면) 내장 브라우저로 해당 페이지를 열어 탐색하도록 제안합니다.
+
+수동 확인 링크:
+- https://www.opinet.co.kr/searRgSelect.do
+
+> 참고: Playwright/Selenium 등 브라우저 자동화로도 시도할 수는 있지만, 캡차/차단/레이아웃 변경에 취약해 *best effort*입니다.
+
 ## OPINET_KEY 발급 방법(요약)
 
-`OPINET_KEY`가 없으면 오피넷 API를 호출할 수 없어서 스킬/CLI가 동작하지 않습니다.
+`OPINET_KEY`는 자동/반복 조회(=API 호출)를 위해 필요합니다.
 
 - 오피넷 접속: https://www.opinet.co.kr/
 - 페이지 이동: *이용안내 → 오피넷 API(유가정보 API)*
