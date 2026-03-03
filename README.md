@@ -174,6 +174,15 @@ nearby-gas-prices --query "소사역" --top 3
 nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
 ```
 
+### 2-1) (추천) 최저가 주유소 상세정보까지 같이 보기 (`--detail`)
+
+`aroundAll.do`로 리스트를 구한 뒤, 최저가 1곳에 대해서는 `detailById.do`를 추가로 호출해서 **주소/전화/부가서비스/유종별 가격**을 같이 보여줍니다.
+
+```bash
+# 판교역 근처 최저가 + 상세
+nearby-gas-prices --query "판교역" --top 1 --detail
+```
+
 예시 출력:
 
 ```text
