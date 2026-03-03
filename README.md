@@ -26,6 +26,32 @@
 
 ---
 
+## 빠른 시작 (CLI)
+
+CLI 스크립트는 스킬 폴더에 포함되어 있습니다.
+
+> *필수*: `OPINET_KEY` 환경변수를 설정해야 합니다.
+> OPINET_KEY가 없다면 아래 *“OPINET_KEY 발급 방법”* 섹션을 먼저 참고하세요.
+> - 바로가기: [OPINET_KEY 발급 방법](#opinet_key-발급-방법)
+
+```bash
+cd skill/nearby-gas-prices
+
+# 필수
+export OPINET_KEY="<YOUR_KEY>"
+
+# Nominatim 사용 시 필수 (contact 포함 권장)
+export NOMINATIM_USER_AGENT='nearby-gas-prices/0.1 (contact: you@example.com)'
+
+# 1) 장소명으로 조회
+python3 scripts/opinet_nearby.py --query "소사역" --prodcd B027 --radius 5000 --top 5
+
+# 2) 위경도로 조회
+python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --radius 5000 --top 5
+```
+
+---
+
 ## OPINET_KEY 발급 방법
 
 오피넷 무료 API를 호출하려면 API 키가 필요합니다. 오피넷 API 요청에서는 이 키를 **`code` 파라미터**로 전달합니다.
@@ -44,28 +70,6 @@ export OPINET_KEY="<YOUR_KEY>"
 보안 주의:
 - 키를 코드/레포/이슈/로그에 남기지 마세요.
 - 환경변수 사용을 권장합니다(또는 `.env`를 사용하되 git에는 커밋하지 않기).
-
----
-
-## 빠른 시작 (CLI)
-
-CLI 스크립트는 스킬 폴더에 포함되어 있습니다.
-
-```bash
-cd skill/nearby-gas-prices
-
-# 필수
-export OPINET_KEY="<YOUR_KEY>"
-
-# Nominatim 사용 시 필수 (contact 포함 권장)
-export NOMINATIM_USER_AGENT='nearby-gas-prices/0.1 (contact: you@example.com)'
-
-# 1) 장소명으로 조회
-python3 scripts/opinet_nearby.py --query "소사역" --prodcd B027 --radius 5000 --top 5
-
-# 2) 위경도로 조회
-python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --radius 5000 --top 5
-```
 
 ---
 
