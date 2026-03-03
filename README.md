@@ -41,7 +41,10 @@ nearby-gas-prices --help
 
 - Windows는 Releases에서 `nearby-gas-prices_windows_amd64.zip`을 내려받아 `nearby-gas-prices.exe`를 PATH에 두는 방식을 권장합니다.
 
-> (선택) Skill로 사용하는 경우에도 내부적으로 이 CLI를 실행합니다. 즉, *Skill만 가져가도 CLI가 없으면 동작하지 않으며*, Skill이 실행 시점에 CLI 설치가 필요한지 안내(및 동의 시 설치)하도록 되어 있습니다.
+*Skill도 결국 이 CLI를 실행하는 방식입니다.*
+
+- *CLI가 설치되어 있어야 Skill이 동작합니다.*
+- Skill은 실행 시점에 CLI 설치 여부를 확인하고, 미설치라면 *설치할지 먼저 물어본 뒤* 동의할 때만 설치를 진행하도록 안내합니다.
 
 ---
 
