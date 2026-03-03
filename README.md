@@ -76,11 +76,13 @@ python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --
 
 ---
 
-## 주의사항 / Gotchas
+## API 제한 / 주의사항
 
 - 오피넷 `aroundAll.do`의 키 파라미터는 **`code`** 입니다 (`certkey` 아님).
 - `aroundAll.do`의 `x`,`y` 좌표는 **KATEC** 입니다(WGS84 위경도 아님).
-- `radius`는 최대 5000m 입니다.
+- `radius`는 오피넷 API 문서에 **최대 5000m**로 명시되어 있어 더 크게 요청할 수 없습니다.
+  - 참고(페이지명: *오픈 API 정보 → 반경 내 주유소*): https://www.opinet.co.kr/user/custapi/openApiInfoDtl.do?apiId=3
+- Nominatim은 **User-Agent에 contact 포함**이 사실상 필수이며(403 방지), Usage Policy를 준수해야 합니다.
 
 ---
 
