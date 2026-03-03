@@ -214,6 +214,12 @@ export OPINET_KEY="<YOUR_KEY>"
 - 스킬 소스(개발/커스터마이즈용): `skill/nearby-gas-prices/`
 - 스킬 배포(사용자 설치용): GitHub Releases의 `.skill` asset
 
+추가로, Agent Skills 디렉토리(https://skills.sh/)에서 쓰는 `npx skills`로도 설치할 수 있습니다:
+
+```bash
+npx skills add https://github.com/rky0930/nearby-gas-prices/tree/main/skill/nearby-gas-prices
+```
+
 > 참고: 이 레포에서는 *일반 사용자 보급*을 위해 CLI 설치를 우선 안내합니다.
 
 ---
