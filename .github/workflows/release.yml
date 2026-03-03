@@ -39,7 +39,8 @@ jobs:
         with:
           go-version: '1.22'
 
-      - name: Build
+      - name: Build (mac/linux)
+        if: ${{ matrix.goos != 'windows' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -50,17 +51,23 @@ jobs:
           export GOOS="${{ matrix.goos }}"
           export GOARCH="${{ matrix.goarch }}"
 
-          EXT=""
-          if [ "$GOOS" = "windows" ]; then EXT=".exe"; fi
+          go build -trimpath -ldflags "-s -w" -o "$OUTDIR/$BIN" ./cmd/nearby-gas-prices
+          tar -C "$OUTDIR" -czf "$OUTDIR/${BIN}_${GOOS}_${GOARCH}.tar.gz" "$BIN"
 
-          go build -trimpath -ldflags "-s -w" -o "$OUTDIR/$BIN$EXT" ./cmd/nearby-gas-prices
+      - name: Build (windows)
+        if: ${{ matrix.goos == 'windows' }}
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $BIN = 'nearby-gas-prices'
+          $OUTDIR = 'dist'
+          New-Item -ItemType Directory -Force -Path $OUTDIR | Out-Null
 
-          if [ "$GOOS" = "windows" ]; then
-            cd "$OUTDIR"
-            zip "${BIN}_${GOOS}_${GOARCH}.zip" "$BIN$EXT"
-          else
-            tar -C "$OUTDIR" -czf "$OUTDIR/${BIN}_${GOOS}_${GOARCH}.tar.gz" "$BIN$EXT"
-          fi
+          $env:GOOS = '${{ matrix.goos }}'
+          $env:GOARCH = '${{ matrix.goarch }}'
+
+          go build -trimpath -ldflags "-s -w" -o "$OUTDIR/$BIN.exe" ./cmd/nearby-gas-prices
+          Compress-Archive -Path "$OUTDIR/$BIN.exe" -DestinationPath "$OUTDIR/${BIN}_${env:GOOS}_${env:GOARCH}.zip" -Force
 
       - name: Package skill (.skill)
         if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}
