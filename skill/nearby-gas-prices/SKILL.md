@@ -19,6 +19,24 @@ description: Find nearby Korean gas stations and cheapest fuel prices using KNOC
 
 ## 빠른 사용
 
+### 0) CLI 설치 확인 (중요)
+
+이 스킬은 내부적으로 `nearby-gas-prices` CLI를 호출하는 방식이라, 먼저 CLI가 설치되어 있어야 한다.
+
+- 설치 여부 확인:
+
+```bash
+command -v nearby-gas-prices
+```
+
+- 설치가 안 되어 있다면:
+  - 먼저 사용자에게 “CLI를 설치할까요?”라고 물어보고, 동의할 때만 설치를 진행한다.
+  - 설치 명령(예시):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/rky0930/nearby-gas-prices/main/install.sh | sh
+```
+
 ### 1) 필수/조건부 설정
 
 - `OPINET_KEY`: *(필수)* 오피넷 무료 API 키
