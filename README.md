@@ -47,27 +47,18 @@ _Skill에서도 이 CLI를 기반으로 실행 됩니다._
 
 ---
 
-## 설정 (환경변수 / 설정 파일)
+## 설정 (설정 파일 / 환경변수)
 
-### 1) 환경변수 (기본 권장)
+### 1) 설정 파일 (권장)
 
-- `OPINET_KEY`: *(필수)* 오피넷 Open API 키  → [OPINET_KEY 발급 방법](#3-opinet_key-발급-방법)
-- `NOMINATIM_USER_AGENT`: *(조건부)* `--query`(장소명 검색) 사용 시 필요
-  - OSM Nominatim 정책상 User-Agent에 앱/연락처(contact) 포함을 권장하며, 미설정/부적절 시 403이 날 수 있습니다.
-
-예시:
-
-```bash
-export OPINET_KEY="<YOUR_KEY>"
-export NOMINATIM_USER_AGENT="nearby-gas-prices/0.1 (contact: you@example.com)"
-```
-
-### 2) 설정 파일 (`~/.config/...`)
-
-일부 에이전트/런타임 환경에서는 프로세스 환경변수 상속이 까다로울 수 있어, 설정 파일에서 키를 읽는 방식도 지원합니다.
+*특히 Skill/에이전트 환경에서는* 프로세스 환경변수 상속이 번거로운 경우가 많아서, **설정 파일을 기본으로** 두는 방식을 권장합니다.
 
 - 경로: `~/.config/nearby-gas-prices/config.toml`
-- 예시:
+- 키:
+  - `opinet_key`: *(필수)* 오피넷 Open API 키  → [OPINET_KEY 발급 방법](#3-opinet_key-발급-방법)
+  - `nominatim_user_agent`: *(조건부)* `--query`(장소명 검색) 사용 시 필요 (contact 포함 권장)
+
+예시:
 
 ```toml
 opinet_key = "YOUR_KEY"
@@ -79,6 +70,22 @@ nominatim_user_agent = "nearby-gas-prices/0.1 (contact: you@example.com)"
 ```bash
 chmod 600 ~/.config/nearby-gas-prices/config.toml
 ```
+
+### 2) 환경변수 (옵션 / 설정 파일 override 용)
+
+원하는 경우 환경변수로도 설정할 수 있습니다.
+
+- `OPINET_KEY`
+- `NOMINATIM_USER_AGENT`
+
+예시:
+
+```bash
+export OPINET_KEY="<YOUR_KEY>"
+export NOMINATIM_USER_AGENT="nearby-gas-prices/0.1 (contact: you@example.com)"
+```
+
+> 참고: 둘 다 설정되어 있다면 현재 CLI는 **환경변수를 우선** 사용합니다(환경변수로 임시 override 하는 용도로 활용 가능).
 
 ### 3) OPINET_KEY 발급 방법
 
