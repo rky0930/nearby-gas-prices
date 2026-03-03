@@ -1,9 +1,14 @@
 ---
 name: nearby-gas-prices
-description: Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks in Korean/English for “주변 주유소”, “근처 휘발유/경유 최저가”, “OO역/OO동 근처 주유소 가격”, “within 5km gas price”, or wants Opinet API usage for location-based gas prices. Supports place-name search via OSM Nominatim (prototype) and calls Opinet with OPINET_KEY (code parameter), converts WGS84 lat/lon to KATEC x/y, returns Top-N with Naver/Google map links.
+description: Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks in Korean/English for “주변 주유소”, “근처 휘발유/경유 최저가”, “OO역/OO동 근처 주유소 가격”, “within 5km gas price”. This skill is an optional OpenClaw integration layer: it triggers the `nearby-gas-prices` CLI and returns a human-readable Top-N summary (and optional JSON) using OPINET_KEY. Place-name search uses OSM Nominatim.
 ---
 
-# Opinet 근처 주유소 최저가 조회
+# nearby-gas-prices (OpenClaw Skill)
+
+이 스킬은 “*자연어 요청 → CLI 실행 → 결과 요약 반환*”을 담당하는 *OpenClaw용 통합 레이어*야.
+
+- 일반 사용자 보급은 **CLI(바이너리)** 가 메인
+- OpenClaw를 쓰는 사람은 이 스킬로 “대화로” 편하게 호출하는 게 목적
 
 ## 핵심 포인트(실수 방지)
 
@@ -12,32 +17,43 @@ description: Find nearby Korean gas stations and cheapest fuel prices using KNOC
 - `radius` 최대 5000(m)
 - 휘발유: `prodcd=B027`
 
-## 빠른 사용(로컬)
+## 빠른 사용
 
-1) 환경변수 설정
+### 1) 필수/조건부 설정
 
-- `OPINET_KEY` (오피넷 무료 API 키)
+- `OPINET_KEY`: *(필수)* 오피넷 무료 API 키
+- `NOMINATIM_USER_AGENT`: *(조건부)* `--query`(지명 검색) 사용 시 필요 (OSM Nominatim 정책상 contact 포함 권장, 미설정 시 403 가능)
 
-2) 스크립트 실행
+환경변수로 설정하거나,
+`~/.config/nearby-gas-prices/config.toml`에 아래 키로 저장해도 된다:
+- `opinet_key`
+- `nominatim_user_agent`
 
-- 장소명으로 (Nominatim은 User-Agent에 실제 연락처 포함 필요):
+### 2) CLI 실행 예시
+
+- 지명으로:
 
 ```bash
-export NOMINATIM_USER_AGENT='myapp/1.0 (contact: me@domain.com)'
-python3 scripts/opinet_nearby.py --query "소사역" --prodcd B027 --radius 5000 --top 5
+nearby-gas-prices --query "부천 역곡역" --top 5
 ```
 
 - 위경도로:
 
 ```bash
-python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --radius 5000 --top 5
+nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 5
+```
+
+- JSON 출력:
+
+```bash
+nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 5 --json
 ```
 
 ## 출력 해석
 
-스크립트는 JSON을 출력한다.
-- `top[0]`가 최저가(가격→거리 순)
-- 각 항목 필드: `OS_NM`(상호), `PRICE`(가격), `DISTANCE`(m), `GIS_X_COOR`,`GIS_Y_COOR`(KATEC), `UNI_ID`, `POLL_DIV_CD`
+CLI는 기본적으로 사람이 읽기 좋은 텍스트를 출력하고, `--json`을 주면 JSON 배열을 출력한다.
+- 각 항목 필드(요약): `name`, `price`, `distance_m`, `x`, `y`
+- `x,y`는 오피넷 응답의 KATEC 좌표를 그대로 담는다.
 
 ## 네이버/구글 지도 링크 만들기
 
@@ -56,7 +72,7 @@ python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --
 
 ## 참고 자료
 
-- 상세 파라미터/다른 API 목록은 `references/opinet-free-api-notes.md` 참고 (원문: Opinet_API_Free.pdf 발췌)
+- 상세 파라미터/다른 API 목록은 `references/opinet-free-api-notes.md` 참고
 
 ## 확장 아이디어(v2)
 
