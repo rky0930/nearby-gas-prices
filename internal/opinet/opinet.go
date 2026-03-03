@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 type AroundAllParams struct {
@@ -27,14 +28,31 @@ type Station struct {
 	Y         float64 `json:"y"`
 }
 
+type stringOrNumber string
+
+func (s *stringOrNumber) UnmarshalJSON(b []byte) error {
+	// Handle: "123", 123, null
+	str := strings.TrimSpace(string(b))
+	if str == "null" || str == "" {
+		*s = ""
+		return nil
+	}
+	if len(str) >= 2 && str[0] == '"' && str[len(str)-1] == '"' {
+		*s = stringOrNumber(str[1 : len(str)-1])
+		return nil
+	}
+	*s = stringOrNumber(str)
+	return nil
+}
+
 type aroundAllResp struct {
 	Result struct {
 		Oil []struct {
-			OSNM  string `json:"OS_NM"`
-			Price string `json:"PRICE"`
-			Dist  string `json:"DISTANCE"`
-			X     string `json:"GIS_X_COOR"`
-			Y     string `json:"GIS_Y_COOR"`
+			OSNM  string         `json:"OS_NM"`
+			Price stringOrNumber `json:"PRICE"`
+			Dist  stringOrNumber `json:"DISTANCE"`
+			X     stringOrNumber `json:"GIS_X_COOR"`
+			Y     stringOrNumber `json:"GIS_Y_COOR"`
 		} `json:"OIL"`
 	} `json:"RESULT"`
 }
@@ -77,10 +95,10 @@ func AroundAll(ctx context.Context, hc *http.Client, p AroundAllParams) ([]Stati
 
 	out := make([]Station, 0, len(raw.Result.Oil))
 	for _, it := range raw.Result.Oil {
-		price, _ := strconv.Atoi(it.Price)
-		dist, _ := strconv.ParseFloat(it.Dist, 64)
-		x, _ := strconv.ParseFloat(it.X, 64)
-		y, _ := strconv.ParseFloat(it.Y, 64)
+		price, _ := strconv.Atoi(string(it.Price))
+		dist, _ := strconv.ParseFloat(string(it.Dist), 64)
+		x, _ := strconv.ParseFloat(string(it.X), 64)
+		y, _ := strconv.ParseFloat(string(it.Y), 64)
 		out = append(out, Station{Name: it.OSNM, Price: price, DistanceM: dist, X: x, Y: y})
 	}
 
