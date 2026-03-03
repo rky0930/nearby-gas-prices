@@ -4,7 +4,7 @@
 
 이 레포에는:
 - GitHub Releases로 배포되는 **바이너리 CLI** (`nearby-gas-prices`)
-- (선택) OpenClaw에서 쓰고 싶을 때를 위한 Skill 소스 (`skill/nearby-gas-prices/`)
+- (선택) 대화형 에이전트에서 쓰고 싶을 때를 위한 Skill 소스 (`skill/nearby-gas-prices/`)
 
 가 들어있습니다.
 
@@ -60,7 +60,7 @@ export NOMINATIM_USER_AGENT="nearby-gas-prices/0.1 (contact: you@example.com)"
 
 ### 2) 설정 파일 (`~/.config/...`)
 
-OpenClaw/Claude Code 같은 환경에서는 프로세스 환경변수 상속이 까다로울 수 있어, 설정 파일에서 키를 읽는 방식도 지원합니다.
+일부 에이전트/런타임 환경에서는 프로세스 환경변수 상속이 까다로울 수 있어, 설정 파일에서 키를 읽는 방식도 지원합니다.
 
 - 경로: `~/.config/nearby-gas-prices/config.toml`
 - 예시:
