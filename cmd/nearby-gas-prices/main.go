@@ -27,7 +27,8 @@ func main() {
 		fmt.Fprintln(out, "  nearby-gas-prices --lat 37.48278 --lon 126.79565 [options]")
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "CONFIG")
-		fmt.Fprintln(out, "  (우선순위) 환경변수 > 설정 파일(~/.config/nearby-gas-prices/config.toml)")
+		fmt.Fprintln(out, "  (권장) 설정 파일 ~/.config/nearby-gas-prices/config.toml")
+		fmt.Fprintln(out, "  (대안) 환경변수 OPINET_KEY / NOMINATIM_USER_AGENT")
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "ENV")
 		fmt.Fprintln(out, "  OPINET_KEY                (필수) 오피넷 무료 API KEY. 요청 파라미터 code 로 전달됨")
@@ -79,12 +80,13 @@ func main() {
 		fatalErr(err)
 	}
 
-	apiKey := strings.TrimSpace(os.Getenv("OPINET_KEY"))
+	// config.toml을 기본으로 사용하고, 환경변수는 필요한 경우에만 대안으로 사용한다.
+	apiKey := strings.TrimSpace(cfg.OpinetKey)
 	if apiKey == "" {
-		apiKey = strings.TrimSpace(cfg.OpinetKey)
+		apiKey = strings.TrimSpace(os.Getenv("OPINET_KEY"))
 	}
 	if apiKey == "" {
-		fatalf("OPINET_KEY가 필요합니다. (환경변수 OPINET_KEY 또는 설정 파일 %s 의 opinet_key)\n키 발급 안내: https://www.opinet.co.kr/user/custapi/custApiInfo.do", cfgPath)
+		fatalf("OPINET_KEY가 필요합니다. (설정 파일 %s 의 opinet_key 또는 환경변수 OPINET_KEY)\n키 발급 안내: https://www.opinet.co.kr/user/custapi/custApiInfo.do", cfgPath)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -94,12 +96,12 @@ func main() {
 
 	var wgsLat, wgsLon float64
 	if *query != "" {
-		ua := strings.TrimSpace(os.Getenv("NOMINATIM_USER_AGENT"))
+		ua := strings.TrimSpace(cfg.NominatimUserAgent)
 		if ua == "" {
-			ua = strings.TrimSpace(cfg.NominatimUserAgent)
+			ua = strings.TrimSpace(os.Getenv("NOMINATIM_USER_AGENT"))
 		}
 		if ua == "" {
-			fatalf("--query 사용 시 NOMINATIM_USER_AGENT가 필요합니다 (환경변수 또는 설정 파일 %s 의 nominatim_user_agent)", cfgPath)
+			fatalf("--query 사용 시 NOMINATIM_USER_AGENT가 필요합니다 (설정 파일 %s 의 nominatim_user_agent 또는 환경변수 NOMINATIM_USER_AGENT)", cfgPath)
 		}
 		res, err := nominatim.SearchOne(ctx, hc, *query, ua)
 		if err != nil {

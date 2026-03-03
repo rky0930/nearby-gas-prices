@@ -1,6 +1,6 @@
 ---
 name: nearby-gas-prices
-description: Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks in Korean/English for “주변 주유소”, “근처 휘발유/경유 최저가”, “OO역/OO동 근처 주유소 가격”, “within 5km gas price”. This skill is an optional OpenClaw integration layer: it triggers the `nearby-gas-prices` *Go binary CLI* and returns a human-readable Top-N summary (and optional JSON). Place-name search uses OSM Nominatim.
+description: Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks (KR/EN): nearby gas prices, cheapest gas within 5km, or queries like '주변 주유소', '근처 휘발유/경유 최저가', 'OO역/OO동 근처 주유소 가격'. This is an optional OpenClaw integration layer that runs the nearby-gas-prices Go binary CLI and summarizes results.
 ---
 
 # nearby-gas-prices (OpenClaw Skill)
@@ -39,13 +39,19 @@ curl -fsSL https://raw.githubusercontent.com/rky0930/nearby-gas-prices/main/inst
 
 ### 1) 필수/조건부 설정
 
-- `OPINET_KEY`: *(필수)* 오피넷 무료 API 키
-- `NOMINATIM_USER_AGENT`: *(조건부)* `--query`(지명 검색) 사용 시 필요 (OSM Nominatim 정책상 contact 포함 권장, 미설정 시 403 가능)
+이 스킬은 내부적으로 `nearby-gas-prices` CLI를 호출하며, CLI 설정은 아래 2가지 방식 중 하나로 줄 수 있다.
 
-환경변수로 설정하거나,
-`~/.config/nearby-gas-prices/config.toml`에 아래 키로 저장해도 된다:
-- `opinet_key`
-- `nominatim_user_agent`
+*설정 파일(권장)*
+- 경로: `~/.config/nearby-gas-prices/config.toml`
+- 키:
+  - `opinet_key` *(필수)* 오피넷 무료 API 키
+  - `nominatim_user_agent` *(조건부)* `--query`(지명 검색) 사용 시 필요 (OSM Nominatim 정책상 contact 포함 권장, 미설정 시 403 가능)
+
+*환경변수(옵션 / override 용)*
+- `OPINET_KEY`
+- `NOMINATIM_USER_AGENT`
+
+> 둘 다 설정되어 있다면 현재 CLI는 **환경변수를 우선** 사용한다.
 
 *설정 파일 템플릿 만들기(추천)*
 
