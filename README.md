@@ -39,12 +39,11 @@ curl -fsSL https://raw.githubusercontent.com/rky0930/nearby-gas-prices/main/inst
 nearby-gas-prices --help
 ```
 
-- Windows는 Releases에서 `nearby-gas-prices_windows_amd64.zip`을 내려받아 `nearby-gas-prices.exe`를 PATH에 두는 방식을 권장합니다.
+- (참고) Windows는 Releases에서 `nearby-gas-prices_windows_amd64.zip`을 내려받아 `nearby-gas-prices.exe`를 PATH에 두는 방식을 권장합니다.
 
-*Skill도 결국 이 CLI를 실행하는 방식입니다.*
+_Skill에서도 이 CLI를 기반으로 실행 됩니다._
 
-- *CLI가 설치되어 있어야 Skill이 동작합니다.*
-- Skill은 실행 시점에 CLI 설치 여부를 확인하고, 미설치라면 *설치할지 먼저 물어본 뒤* 동의할 때만 설치를 진행하도록 안내합니다.
+- Skill은 실행 시점에 CLI 설치 여부를 확인하고, 설치되어 있지 않다면 _설치할지 먼저 물어본 뒤, 동의시_ 설치를 진행하도록 만들어져 있습니다.
 
 ---
 
