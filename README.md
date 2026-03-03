@@ -3,10 +3,10 @@
 한국석유공사 **오피넷(Opinet)** 무료 API를 이용해, 특정 위치(장소명/위경도) 기준 *주변 주유소 가격*과 *최저가 주유소*를 찾는 프로젝트입니다.
 
 이 레포에는:
-- OpenClaw용 **Skill** (`skill/nearby-gas-prices/`)
-- (스킬에 포함된) 간단한 CLI 스크립트
+- *누구나 실행 가능한* 간단한 **CLI 스크립트**
+- (선택) OpenClaw에서 쓰고 싶을 때를 위한 Skill 소스 (`skill/nearby-gas-prices/`)
 
-이 들어있습니다.
+가 들어있습니다.
 
 ---
 
@@ -26,28 +26,40 @@
 
 ---
 
-## 빠른 시작 (CLI)
+## 설치 (CLI)
 
-CLI 스크립트는 스킬 폴더에 포함되어 있습니다.
+OpenClaw가 없어도, Python만 있으면 실행 가능합니다.
+
+### 1) 레포 받기
+
+```bash
+git clone https://github.com/rky0930/nearby-gas-prices.git
+cd nearby-gas-prices
+```
+
+### 2) 환경변수 설정
 
 > *필수*: `OPINET_KEY` 환경변수를 설정해야 합니다.
 > OPINET_KEY가 없다면 아래 *“OPINET_KEY 발급 방법”* 섹션을 먼저 참고하세요.
 > - 바로가기: [OPINET_KEY 발급 방법](#opinet_key-발급-방법)
 
 ```bash
-cd skill/nearby-gas-prices
-
-# 필수
 export OPINET_KEY="<YOUR_KEY>"
+```
 
-# Nominatim 사용 시 필수 (contact 포함 권장)
+장소명 검색(`--query`)을 쓸 거면 Nominatim User-Agent도 설정하세요(403 방지):
+
+```bash
 export NOMINATIM_USER_AGENT='nearby-gas-prices/0.1 (contact: you@example.com)'
+```
 
-# 1) 장소명으로 조회
-python3 scripts/opinet_nearby.py --query "소사역" --prodcd B027 --radius 5000 --top 5
+### 3) 실행
 
-# 2) 위경도로 조회
-python3 scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --radius 5000 --top 5
+```bash
+python3 skill/nearby-gas-prices/scripts/opinet_nearby.py --query "소사역" --prodcd B027 --radius 5000 --top 5
+
+# 또는 위경도로
+python3 skill/nearby-gas-prices/scripts/opinet_nearby.py --lat 37.48278 --lon 126.79565 --prodcd B027 --radius 5000 --top 5
 ```
 
 ---
@@ -73,10 +85,14 @@ export OPINET_KEY="<YOUR_KEY>"
 
 ---
 
-## OpenClaw Skill
+## (선택) OpenClaw Skill로 사용
+
+OpenClaw를 쓰는 사람은 `skill/nearby-gas-prices/`를 스킬로 패키징해서 사용할 수 있습니다.
 
 - 스킬 소스: `skill/nearby-gas-prices/`
-- 배포: `.skill` 파일로 패키징 후 GitHub Releases에 업로드하는 방식을 권장합니다.
+- 배포: `.skill` 파일로 패키징 후 GitHub Releases에 업로드
+
+> 설치/임포트 방법은 OpenClaw 버전/환경에 따라 달라질 수 있어, 레포에서는 기본 CLI 설치를 우선 안내합니다.
 
 ---
 
