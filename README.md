@@ -51,7 +51,7 @@ _Skill에서도 이 CLI를 기반으로 실행 됩니다._
 
 ### 1) 환경변수 (기본 권장)
 
-- `OPINET_KEY`: *(필수)* 오피넷 Open API 키
+- `OPINET_KEY`: *(필수)* 오피넷 Open API 키  → [OPINET_KEY 발급 방법](#opinet_key-발급-방법)
 - `NOMINATIM_USER_AGENT`: *(조건부)* `--query`(장소명 검색) 사용 시 필요
   - OSM Nominatim 정책상 User-Agent에 앱/연락처(contact) 포함을 권장하며, 미설정/부적절 시 403이 날 수 있습니다.
 
@@ -149,34 +149,7 @@ nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
    지도(네이버): https://map.naver.com/v5/search/%E3%88%9C%EC%82%BC%ED%91%9C%EC%97%90%EB%84%88%EC%A7%80+%EC%82%BC%ED%91%9C%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.778113,37.494629,15,0,0,0,dh
 ```
 
-### 3) JSON 출력
-
-```bash
-nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 2 --json
-```
-
-예시 출력:
-
-```json
-[
-  {
-    "name": "(주)역곡주유소",
-    "price": 1645,
-    "distance_m": 2238.1,
-    "x": 295782.1,
-    "y": 543747.1
-  },
-  {
-    "name": "㈜삼표에너지 삼표주유소",
-    "price": 1655,
-    "distance_m": 2032.8,
-    "x": 292147.9736,
-    "y": 544308.2397
-  }
-]
-```
-
-### 4) Skill로 조회 (대화형)
+### 3) Skill로 조회 (대화형)
 
 Skill이 설치되어 있다면, CLI 옵션을 직접 기억하지 않아도 아래처럼 대화형으로 호출할 수 있습니다.
 
@@ -220,20 +193,12 @@ export OPINET_KEY="<YOUR_KEY>"
 
 원하는 경우 이 프로젝트를 *스킬로 추가*해서, 대화형 요청을 `nearby-gas-prices` CLI 실행으로 연결할 수 있습니다.
 
-### 스킬로 할 수 있는 것
+> 위 *사용 예시*의 "Skill로 조회(대화형)" 항목도 참고하세요.
 
-- "소사역 근처 최저가 주유소 알려줘" 같은 요청을 *자연어 → CLI 실행*으로 연결
-- `--query`/`--lat`/`--lon`, `--prodcd all`, `--brand`, `--with-avg`, `--detail` 같은 옵션을 AI가 상황에 맞게 조합
-- 에이전트 환경에서 환경변수 상속이 애매할 때 `~/.config/nearby-gas-prices/config.toml` 방식 안내
+### 설치 방법
 
-### 설치 방법(권장: Releases에서 가져오기)
-
-사용자가 다시 패키징할 필요 없이, *Releases에 업로드된 `.skill` 파일*을 그대로 가져가서 설치/임포트하면 됩니다.
-
-- 스킬 소스(개발/커스터마이즈용): `skill/nearby-gas-prices/`
-- 스킬 배포(사용자 설치용): GitHub Releases의 `.skill` asset
-
-추가로, Agent Skills 디렉토리(https://skills.sh/)에서 쓰는 `npx skills`로도 설치할 수 있습니다:
+- GitHub Releases의 `.skill` asset을 설치/임포트해서 사용
+- 또는 https://skills.sh/ 의 `npx skills`로 설치
 
 ```bash
 npx skills add https://github.com/rky0930/nearby-gas-prices/tree/main/skill/nearby-gas-prices
