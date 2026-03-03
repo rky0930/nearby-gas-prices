@@ -1,6 +1,6 @@
 ---
 name: nearby-gas-prices
-description: Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks (KR/EN): nearby gas prices, cheapest gas within 5km, or queries like '주변 주유소', '근처 휘발유/경유 최저가', 'OO역/OO동 근처 주유소 가격'. This is an optional OpenClaw integration layer that runs the nearby-gas-prices Go binary CLI and summarizes results.
+description: "Find nearby Korean gas stations and cheapest fuel prices using KNOC Opinet free API (aroundAll.do). Use when a user asks (KR/EN): nearby gas prices, cheapest gas within 5km, or queries like '주변 주유소', '근처 휘발유/경유 최저가', 'OO역/OO동 근처 주유소 가격'. This is an optional OpenClaw integration layer that runs the nearby-gas-prices Go binary CLI and summarizes results."
 ---
 
 # nearby-gas-prices (OpenClaw Skill)
