@@ -83,11 +83,36 @@ chmod 600 ~/.config/nearby-gas-prices/config.toml
 ### 1) 지명으로 조회 (`--query`)
 
 ```bash
-# 예: 부천 역곡역 근처
-nearby-gas-prices --query "부천 역곡역" --top 3
+# 예: 소사역 근처
+nearby-gas-prices --query "소사역" --top 3
 
 # "근처" 같은 표현도 동작할 수 있지만, 지오코딩 결과가 애매할 수 있어
 # 보통은 "역곡역", "부천 역곡역"처럼 지명/역 이름을 권장합니다.
+```
+
+예시 출력:
+
+```text
+기준 좌표(WGS84): 37.482766, 126.795590
+검색 반경: 5000m (오피넷 aroundAll.do 최대 5000m)
+
+1) (주)역곡주유소
+   가격: 1645원
+   거리: 2244m
+   브랜드: ETC
+   지도(네이버): https://map.naver.com/v5/search/%28%EC%A3%BC%29%EC%97%AD%EA%B3%A1%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.819282,37.489991,15,0,0,0,dh
+
+2) ㈜삼표에너지 삼표주유소
+   가격: 1655원
+   거리: 2030m
+   브랜드: GSC
+   지도(네이버): https://map.naver.com/v5/search/%E3%88%9C%EC%82%BC%ED%91%9C%EC%97%90%EB%84%88%EC%A7%80+%EC%82%BC%ED%91%9C%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.778113,37.494629,15,0,0,0,dh
+
+3) (주)명연에너지 시흥IC훼미리주유소
+   가격: 1655원
+   거리: 3290m
+   브랜드: HDO
+   지도(네이버): https://map.naver.com/v5/search/%28%EC%A3%BC%29%EB%AA%85%EC%97%B0%EC%97%90%EB%84%88%EC%A7%80+%EC%8B%9C%ED%9D%A5IC%ED%9B%BC%EB%AF%B8%EB%A6%AC%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.795755,37.453109,15,0,0,0,dh
 ```
 
 > 참고: `--query`는 OSM Nominatim을 사용하므로 `NOMINATIM_USER_AGENT`(또는 설정 파일의 `nominatim_user_agent`)가 필요합니다.
