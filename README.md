@@ -80,6 +80,34 @@ nominatim_user_agent = "nearby-gas-prices/0.1 (contact: you@example.com)"
 chmod 600 ~/.config/nearby-gas-prices/config.toml
 ```
 
+### 3) OPINET_KEY 발급 방법
+
+오피넷 무료 API를 호출하려면 API 키가 필요합니다. 오피넷 API 요청에서는 이 키를 **`code` 파라미터**로 전달합니다.
+
+1. 오피넷 접속: https://www.opinet.co.kr/
+2. 페이지 이동: *이용안내 → 오피넷 API(유가정보 API)*
+   - 안내 페이지 링크: https://www.opinet.co.kr/user/custapi/custApiInfo.do
+3. 로그인/회원가입
+4. **무료 API 이용신청** 진행
+5. 발급된 KEY(인증키)를 환경변수로 설정
+
+```bash
+export OPINET_KEY="<YOUR_KEY>"
+```
+
+### 4) (선택) Skill로 사용
+
+원하는 경우 이 프로젝트를 *스킬로 추가*해서, 대화형 요청을 `nearby-gas-prices` CLI 실행으로 연결할 수 있습니다.
+
+> 아래 *사용 예시*의 "Skill로 조회(대화형)" 항목도 참고하세요.
+
+- GitHub Releases의 `.skill` asset을 설치/임포트해서 사용
+- 또는 https://skills.sh/ 의 `npx skills`로 설치
+
+```bash
+npx skills add https://github.com/rky0930/nearby-gas-prices/tree/main/skill/nearby-gas-prices
+```
+
 ---
 
 ## 사용 예시
@@ -165,46 +193,6 @@ Skill이 설치되어 있다면, CLI 옵션을 직접 기억하지 않아도 아
 ```
 
 > 참고: 위 예시는 실행 시점에 따라 가격/순서/거리 등이 달라질 수 있습니다.
-
----
-
-## OPINET_KEY 발급 방법
-
-오피넷 무료 API를 호출하려면 API 키가 필요합니다. 오피넷 API 요청에서는 이 키를 **`code` 파라미터**로 전달합니다.
-
-1. 오피넷 접속: https://www.opinet.co.kr/
-2. 페이지 이동: *이용안내 → 오피넷 API(유가정보 API)*
-   - 안내 페이지 링크: https://www.opinet.co.kr/user/custapi/custApiInfo.do
-3. 로그인/회원가입
-4. **무료 API 이용신청** 진행
-5. 발급된 KEY(인증키)를 환경변수로 설정
-
-```bash
-export OPINET_KEY="<YOUR_KEY>"
-```
-
-보안 주의:
-- 키를 코드/레포/이슈/로그에 남기지 마세요.
-- 환경변수 사용을 권장합니다(또는 `.env`를 사용하되 git에는 커밋하지 않기).
-
----
-
-## (선택) Skill로 사용
-
-원하는 경우 이 프로젝트를 *스킬로 추가*해서, 대화형 요청을 `nearby-gas-prices` CLI 실행으로 연결할 수 있습니다.
-
-> 위 *사용 예시*의 "Skill로 조회(대화형)" 항목도 참고하세요.
-
-### 설치 방법
-
-- GitHub Releases의 `.skill` asset을 설치/임포트해서 사용
-- 또는 https://skills.sh/ 의 `npx skills`로 설치
-
-```bash
-npx skills add https://github.com/rky0930/nearby-gas-prices/tree/main/skill/nearby-gas-prices
-```
-
-> 참고: 이 레포에서는 *일반 사용자 보급*을 위해 CLI 설치를 우선 안내합니다.
 
 ---
 
