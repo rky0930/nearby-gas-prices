@@ -37,6 +37,7 @@ func main() {
 		fmt.Fprintln(out, "NOTES")
 		fmt.Fprintln(out, "  - Opinet aroundAll.do 제한: radius <= 5000m")
 		fmt.Fprintln(out, "  - Opinet aroundAll.do 좌표: x,y 는 KATEC (WGS84 위경도 아님)")
+		fmt.Fprintln(out, "  - 코드 목록 출력: nearby-gas-prices --list-codes")
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "EXAMPLES")
 		fmt.Fprintln(out, "  export OPINET_KEY=\"<YOUR_KEY>\"")
@@ -49,19 +50,25 @@ func main() {
 	}
 
 	var (
-		query   = flag.String("query", "", "장소명(예: 소사역)")
-		lat     = flag.Float64("lat", 0, "위도 (WGS84)")
-		lon     = flag.Float64("lon", 0, "경도 (WGS84)")
-		radius  = flag.Int("radius", 5000, "검색 반경(m). 오피넷 aroundAll.do 는 최대 5000")
-		prodcd  = flag.String("prodcd", "B027", "유종 코드. 예: B027=휘발유, D047=경유, K015=LPG(부탄). 여러 개는 콤마로(B027,D047), 또는 all")
-		brand   = flag.String("brand", "", "상표(브랜드) 필터. 예: SOL,SKE,GSC,HDO,RTE... (콤마로 여러 개)")
-		withAvg = flag.Bool("with-avg", false, "전국 평균가(avgAllPrice) 대비 차이도 함께 표시")
-		detail  = flag.Bool("detail", false, "상위 1개 주유소에 대해 상세정보(detailById)도 함께 출력")
-		sortBy  = flag.Int("sort", 1, "정렬: 1=가격순, 2=거리순")
-		top     = flag.Int("top", 5, "상위 N개 출력")
-		jsonOut = flag.Bool("json", false, "JSON으로 출력")
+		query     = flag.String("query", "", "장소명(예: 소사역)")
+		lat       = flag.Float64("lat", 0, "위도 (WGS84)")
+		lon       = flag.Float64("lon", 0, "경도 (WGS84)")
+		radius    = flag.Int("radius", 5000, "검색 반경(m). 오피넷 aroundAll.do 는 최대 5000")
+		prodcd    = flag.String("prodcd", "B027", "유종 코드. 예: B027=휘발유, D047=경유, K015=LPG(부탄). 여러 개는 콤마로(B027,D047), 또는 all")
+		brand     = flag.String("brand", "", "상표(브랜드) 필터. 예: SOL,SKE,GSC,HDO,RTE... (콤마로 여러 개)")
+		withAvg   = flag.Bool("with-avg", false, "전국 평균가(avgAllPrice) 대비 차이도 함께 표시")
+		detail    = flag.Bool("detail", false, "상위 1개 주유소에 대해 상세정보(detailById)도 함께 출력")
+		listCodes = flag.Bool("list-codes", false, "유종/브랜드 코드 목록 출력 후 종료")
+		sortBy    = flag.Int("sort", 1, "정렬: 1=가격순, 2=거리순")
+		top       = flag.Int("top", 5, "상위 N개 출력")
+		jsonOut   = flag.Bool("json", false, "JSON으로 출력")
 	)
 	flag.Parse()
+
+	if *listCodes {
+		printCodes()
+		return
+	}
 
 	if *radius > 5000 {
 		fatalf("radius는 오피넷 API 제한으로 최대 5000m 입니다 (입력값: %d)", *radius)
@@ -291,4 +298,24 @@ func parseCSVSet(s string) map[string]bool {
 		out[p] = true
 	}
 	return out
+}
+
+func printCodes() {
+	fmt.Println("유종(prodcd) 코드")
+	fmt.Println("- B027: 휘발유")
+	fmt.Println("- D047: 경유(자동차용)")
+	fmt.Println("- K015: LPG(자동차용부탄)")
+	fmt.Println()
+
+	fmt.Println("브랜드(상표) 코드 (brand)")
+	fmt.Println("- SKE: SK에너지")
+	fmt.Println("- GSC: GS칼텍스")
+	fmt.Println("- HDO: 현대오일뱅크")
+	fmt.Println("- SOL: S-OIL")
+	fmt.Println("- RTE: 자영알뜰")
+	fmt.Println("- RTX: 고속도로알뜰")
+	fmt.Println("- NHO: 농협알뜰")
+	fmt.Println("- ETC: 자가상표")
+	fmt.Println("- E1G: E1")
+	fmt.Println("- SKG: SK가스")
 }
