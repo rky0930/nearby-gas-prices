@@ -199,12 +199,25 @@ export OPINET_KEY="<YOUR_KEY>"
 
 ## (선택) OpenClaw Skill로 사용
 
-OpenClaw를 쓰는 사람은 `skill/nearby-gas-prices/`를 스킬로 패키징해서 사용할 수 있습니다.
+OpenClaw를 쓰는 사람은 이 프로젝트를 *스킬로 추가*해서, 대화로 `nearby-gas-prices` CLI를 더 쉽게 호출할 수 있습니다.
 
-- 스킬 소스: `skill/nearby-gas-prices/`
-- 배포: `.skill` 파일로 패키징 후 GitHub Releases에 업로드
+### 스킬로 할 수 있는 것
 
-> 설치/임포트 방법은 OpenClaw 버전/환경에 따라 달라질 수 있어, 레포에서는 기본 CLI 설치를 우선 안내합니다.
+- "소사역 근처 최저가 주유소 알려줘" 같은 요청을 *자연어 → CLI 실행*으로 연결
+- `--query`/`--lat`/`--lon`, `--prodcd all`, `--brand`, `--with-avg`, `--detail` 같은 옵션을 AI가 상황에 맞게 조합
+- OpenClaw/에이전트 환경에서 환경변수 상속이 애매할 때 `~/.config/nearby-gas-prices/config.toml` 방식 안내
+
+### 설치 방법(권장: Releases에서 가져오기)
+
+사용자가 다시 패키징할 필요 없이, *Releases에 업로드된 `.skill` 파일*을 그대로 가져가서 설치/임포트하면 됩니다.
+
+- 스킬 소스(개발/커스터마이즈용): `skill/nearby-gas-prices/`
+- 스킬 배포(사용자 설치용): GitHub Releases의 `.skill` asset
+
+스킬 설치/로드 방식은 OpenClaw 버전/환경에 따라 다를 수 있어, 자세한 방법은 OpenClaw 공식 문서를 참고하세요:
+- https://docs.openclaw.ai/tools/skills
+
+> 참고: 이 레포에서는 *일반 사용자 보급*을 위해 CLI 설치를 우선 안내합니다.
 
 ---
 
