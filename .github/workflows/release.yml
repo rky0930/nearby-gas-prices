@@ -62,9 +62,19 @@ jobs:
             tar -C "$OUTDIR" -czf "$OUTDIR/${BIN}_${GOOS}_${GOARCH}.tar.gz" "$BIN$EXT"
           fi
 
+      - name: Package skill (.skill)
+        if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          # .skill is just a zipped skill directory
+          (cd skill && zip -r "../dist/nearby-gas-prices.skill" "nearby-gas-prices")
+
       - name: Upload assets to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/*.tar.gz
             dist/*.zip
+            dist/*.skill
