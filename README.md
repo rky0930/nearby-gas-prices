@@ -78,6 +78,67 @@ chmod 600 ~/.config/nearby-gas-prices/config.toml
 
 ---
 
+## 사용 예시
+
+### 1) 위경도로 조회 (예: 소사역 근처)
+
+```bash
+nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
+```
+
+예시 출력:
+
+```text
+기준 좌표(WGS84): 37.482780, 126.795650
+검색 반경: 5000m (오피넷 aroundAll.do 최대 5000m)
+
+1) (주)역곡주유소
+   가격: 1645원
+   거리: 2238m
+   지도(네이버): https://map.naver.com/v5/search/%28%EC%A3%BC%29%EC%97%AD%EA%B3%A1%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.819282,37.489991,15,0,0,0,dh
+
+2) (주)명연에너지 시흥IC훼미리주유소
+   가격: 1655원
+   거리: 3292m
+   지도(네이버): https://map.naver.com/v5/search/%28%EC%A3%BC%29%EB%AA%85%EC%97%B0%EC%97%90%EB%84%88%EC%A7%80+%EC%8B%9C%ED%9D%A5IC%ED%9B%BC%EB%AF%B8%EB%A6%AC%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.795755,37.453109,15,0,0,0,dh
+
+3) ㈜삼표에너지 삼표주유소
+   가격: 1655원
+   거리: 2033m
+   지도(네이버): https://map.naver.com/v5/search/%E3%88%9C%EC%82%BC%ED%91%9C%EC%97%90%EB%84%88%EC%A7%80+%EC%82%BC%ED%91%9C%EC%A3%BC%EC%9C%A0%EC%86%8C?c=126.778113,37.494629,15,0,0,0,dh
+```
+
+### 2) JSON 출력
+
+```bash
+nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 2 --json
+```
+
+예시 출력:
+
+```json
+[
+  {
+    "name": "(주)역곡주유소",
+    "price": 1645,
+    "distance_m": 2238.1,
+    "x": 295782.1,
+    "y": 543747.1
+  },
+  {
+    "name": "㈜삼표에너지 삼표주유소",
+    "price": 1655,
+    "distance_m": 2032.8,
+    "x": 292147.9736,
+    "y": 544308.2397
+  }
+]
+```
+
+> 참고: 위 예시는 실행 시점에 따라 가격/순서/거리 등이 달라질 수 있습니다.
+
+---
+
 ## OPINET_KEY 발급 방법
 
 오피넷 무료 API를 호출하려면 API 키가 필요합니다. 오피넷 API 요청에서는 이 키를 **`code` 파라미터**로 전달합니다.
