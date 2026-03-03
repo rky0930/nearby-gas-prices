@@ -174,6 +174,18 @@ nearby-gas-prices --query "소사역" --top 3
 nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 3
 ```
 
+### 2-1) (옵션) 필요할 때만 상세정보 보기 (`--detail`)
+
+기본 조회(`aroundAll.do`)는 빠르게 리스트만 보여줍니다.
+주소/전화/부가서비스/유종별 가격 같은 **상세정보가 필요할 때만** `--detail`을 켜서, 최저가 1곳에 대해 `detailById.do`를 추가 호출합니다.
+
+```bash
+# 판교역 근처 최저가 + 상세(주소/전화/부가서비스/유종별 가격)
+nearby-gas-prices --query "판교역" --top 1 --detail
+```
+
+> 참고: `--detail`은 추가 API 호출이 들어가므로, 기본값으로 항상 켜기보다는 "필요할 때만" 사용하는 것을 권장합니다.
+
 예시 출력:
 
 ```text
