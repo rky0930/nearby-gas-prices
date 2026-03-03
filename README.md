@@ -51,7 +51,7 @@ _Skill에서도 이 CLI를 기반으로 실행 됩니다._
 
 ### 1) 환경변수 (기본 권장)
 
-- `OPINET_KEY`: *(필수)* 오피넷 Open API 키  → [OPINET_KEY 발급 방법](#opinet_key-발급-방법)
+- `OPINET_KEY`: *(필수)* 오피넷 Open API 키  → [OPINET_KEY 발급 방법](#3-opinet_key-발급-방법)
 - `NOMINATIM_USER_AGENT`: *(조건부)* `--query`(장소명 검색) 사용 시 필요
   - OSM Nominatim 정책상 User-Agent에 앱/연락처(contact) 포함을 권장하며, 미설정/부적절 시 403이 날 수 있습니다.
 
