@@ -47,6 +47,18 @@ curl -fsSL https://raw.githubusercontent.com/rky0930/nearby-gas-prices/main/inst
 - `opinet_key`
 - `nominatim_user_agent`
 
+*설정 파일 템플릿 만들기(추천)*
+
+```bash
+mkdir -p ~/.config/nearby-gas-prices
+cat > ~/.config/nearby-gas-prices/config.toml <<'TOML'
+opinet_key = "YOUR_KEY"
+# --query(지명 검색) 쓸 때만 필요 (contact 포함 권장)
+# nominatim_user_agent = "nearby-gas-prices/0.1 (contact: you@example.com)"
+TOML
+chmod 600 ~/.config/nearby-gas-prices/config.toml
+```
+
 ### 2) CLI 실행 예시
 
 - 지명으로:

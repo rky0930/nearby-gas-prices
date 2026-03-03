@@ -108,6 +108,18 @@ export OPINET_KEY="<YOUR_KEY>"
 npx skills add https://github.com/rky0930/nearby-gas-prices/tree/main/skill/nearby-gas-prices
 ```
 
+스킬을 설치한 뒤에는 *키 설정이 필요*합니다. 에이전트/런타임 환경에서 환경변수 설정이 번거로우면, 아래처럼 설정 파일을 만들어두는 걸 권장합니다:
+
+```bash
+mkdir -p ~/.config/nearby-gas-prices
+cat > ~/.config/nearby-gas-prices/config.toml <<'TOML'
+opinet_key = "YOUR_KEY"
+# --query(장소명 검색) 쓸 때만 필요 (contact 포함 권장)
+# nominatim_user_agent = "nearby-gas-prices/0.1 (contact: you@example.com)"
+TOML
+chmod 600 ~/.config/nearby-gas-prices/config.toml
+```
+
 ---
 
 ## 사용 예시
