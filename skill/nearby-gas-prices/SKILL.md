@@ -43,6 +43,24 @@ nearby-gas-prices --query "부천 역곡역" --top 5
 nearby-gas-prices --lat 37.48278 --lon 126.79565 --top 5
 ```
 
+- 휘발유/경유/LPG 한 번에(섹션별 출력):
+
+```bash
+nearby-gas-prices --query "부천 역곡역" --prodcd all --top 5
+```
+
+- 선호 브랜드만 필터(예: S-OIL=SOL, SK에너지=SKE):
+
+```bash
+nearby-gas-prices --query "부천 역곡역" --brand SOL,SKE --top 5
+```
+
+- 평균 대비 얼마나 싼지(전국 평균가) + 상세정보(Top1):
+
+```bash
+nearby-gas-prices --query "부천 역곡역" --with-avg --detail --top 5
+```
+
 - JSON 출력:
 
 ```bash
