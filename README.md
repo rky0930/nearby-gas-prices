@@ -28,7 +28,7 @@
 
 ## 설치 (CLI)
 
-### 옵션 A) (추천) 바이너리 CLI 설치 (Releases + install.sh)
+### 바이너리 CLI 설치 (Releases + install.sh)
 
 릴리즈된 바이너리를 설치하면 Python 없이도 실행할 수 있습니다.
 
@@ -58,11 +58,11 @@ export OPINET_KEY="<YOUR_KEY>"
 export NOMINATIM_USER_AGENT="nearby-gas-prices/0.1 (contact: you@example.com)"
 ```
 
-### 2) 설정 파일 (`~/.config/...`) (예정)
+### 2) 설정 파일 (`~/.config/...`)
 
-OpenClaw/Claude Code 같은 환경에서는 프로세스 환경변수 상속이 까다로울 수 있어, 설정 파일로 키를 읽는 방식도 추가할 예정입니다.
+OpenClaw/Claude Code 같은 환경에서는 프로세스 환경변수 상속이 까다로울 수 있어, 설정 파일에서 키를 읽는 방식도 지원합니다.
 
-- 경로(예정): `~/.config/nearby-gas-prices/config.toml`
+- 경로: `~/.config/nearby-gas-prices/config.toml`
 - 예시:
 
 ```toml

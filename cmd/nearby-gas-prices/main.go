@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/rky0930/nearby-gas-prices/internal/config"
 	"github.com/rky0930/nearby-gas-prices/internal/geo"
 	"github.com/rky0930/nearby-gas-prices/internal/nominatim"
 	"github.com/rky0930/nearby-gas-prices/internal/opinet"
@@ -24,6 +25,9 @@ func main() {
 		fmt.Fprintln(out, "USAGE")
 		fmt.Fprintln(out, "  nearby-gas-prices --query \"소사역\" [options]")
 		fmt.Fprintln(out, "  nearby-gas-prices --lat 37.48278 --lon 126.79565 [options]")
+		fmt.Fprintln(out)
+		fmt.Fprintln(out, "CONFIG")
+		fmt.Fprintln(out, "  (우선순위) 환경변수 > 설정 파일(~/.config/nearby-gas-prices/config.toml)")
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "ENV")
 		fmt.Fprintln(out, "  OPINET_KEY                (필수) 오피넷 무료 API KEY. 요청 파라미터 code 로 전달됨")
@@ -59,9 +63,17 @@ func main() {
 		fatalf("radius는 오피넷 API 제한으로 최대 5000m 입니다 (입력값: %d)", *radius)
 	}
 
+	cfg, cfgPath, err := config.Load()
+	if err != nil {
+		fatalErr(err)
+	}
+
 	apiKey := strings.TrimSpace(os.Getenv("OPINET_KEY"))
 	if apiKey == "" {
-		fatalf("OPINET_KEY 환경변수가 필요합니다. README의 OPINET_KEY 발급 방법 섹션을 참고하세요.")
+		apiKey = strings.TrimSpace(cfg.OpinetKey)
+	}
+	if apiKey == "" {
+		fatalf("OPINET_KEY가 필요합니다. (환경변수 OPINET_KEY 또는 설정 파일 %s 의 opinet_key)", cfgPath)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -73,7 +85,10 @@ func main() {
 	if *query != "" {
 		ua := strings.TrimSpace(os.Getenv("NOMINATIM_USER_AGENT"))
 		if ua == "" {
-			fatalf("--query 사용 시 NOMINATIM_USER_AGENT 환경변수가 필요합니다 (contact 포함 권장)")
+			ua = strings.TrimSpace(cfg.NominatimUserAgent)
+		}
+		if ua == "" {
+			fatalf("--query 사용 시 NOMINATIM_USER_AGENT가 필요합니다 (환경변수 또는 설정 파일 %s 의 nominatim_user_agent)", cfgPath)
 		}
 		res, err := nominatim.SearchOne(ctx, hc, *query, ua)
 		if err != nil {
