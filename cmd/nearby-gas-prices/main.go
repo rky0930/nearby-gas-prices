@@ -31,6 +31,7 @@ func main() {
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "ENV")
 		fmt.Fprintln(out, "  OPINET_KEY                (필수) 오피넷 무료 API KEY. 요청 파라미터 code 로 전달됨")
+		fmt.Fprintln(out, "                          키 발급: https://www.opinet.co.kr/user/custapi/custApiInfo.do")
 		fmt.Fprintln(out, "  NOMINATIM_USER_AGENT      (조건부) --query 사용 시 필요. OSM Nominatim 정책상 contact 포함 권장(미설정 시 403 가능)")
 		fmt.Fprintln(out)
 		fmt.Fprintln(out, "NOTES")
@@ -73,7 +74,7 @@ func main() {
 		apiKey = strings.TrimSpace(cfg.OpinetKey)
 	}
 	if apiKey == "" {
-		fatalf("OPINET_KEY가 필요합니다. (환경변수 OPINET_KEY 또는 설정 파일 %s 의 opinet_key)", cfgPath)
+		fatalf("OPINET_KEY가 필요합니다. (환경변수 OPINET_KEY 또는 설정 파일 %s 의 opinet_key)\n키 발급 안내: https://www.opinet.co.kr/user/custapi/custApiInfo.do", cfgPath)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
